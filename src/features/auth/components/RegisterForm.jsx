@@ -2,13 +2,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { register as registerAccount } from "../../../services/AuthService";
+import { tailspin } from "ldrs";
+import toast from "react-hot-toast";
 
 const RegisterForm = () => {
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
   const nav = useNavigate();
 
@@ -18,10 +20,12 @@ const RegisterForm = () => {
     if (res.status === 200) {
       nav("/login");
     } else {
+      toast.error("Error at Register");
       console.log("error at register");
     }
     reset();
   };
+  tailspin.register();
 
   return (
     <form
@@ -31,7 +35,7 @@ const RegisterForm = () => {
       <div>
         <label
           htmlFor="name"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 "
         >
           Name
         </label>
@@ -39,7 +43,7 @@ const RegisterForm = () => {
           type="text"
           id="name"
           {...register("name", { required: true })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
           placeholder="your name"
         />
         {errors.name && errors.name.type === "required" && (
@@ -49,7 +53,7 @@ const RegisterForm = () => {
       <div>
         <label
           htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 "
         >
           Your email
         </label>
@@ -63,7 +67,7 @@ const RegisterForm = () => {
               message: "Invalid email address",
             },
           })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
           placeholder="name@company.com"
         />
         {errors.email && errors.email.type === "required" && (
@@ -77,7 +81,7 @@ const RegisterForm = () => {
       <div>
         <label
           htmlFor="password"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 "
         >
           Password
         </label>
@@ -85,7 +89,7 @@ const RegisterForm = () => {
           type="password"
           {...register("password", { required: true })}
           id="password"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
         />
         {errors.password && errors.password.type === "required" && (
           <p className="mt-1 text-xs text-red-500">Password is Required</p>
@@ -94,7 +98,7 @@ const RegisterForm = () => {
       <div>
         <label
           htmlFor="password_confirmation"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 "
         >
           Confirm password
         </label>
@@ -102,7 +106,7 @@ const RegisterForm = () => {
           type="password"
           id="password_confirmation"
           {...register("password_confirmation", { required: true })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
         />
         {errors.password_confirmation &&
           errors.password_confirmation.type === "required" && (
@@ -117,19 +121,13 @@ const RegisterForm = () => {
             id="terms"
             aria-describedby="terms"
             type="checkbox"
-            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
           />
         </div>
         <div className="ml-3 text-sm">
-          <label
-            htmlFor="terms"
-            className="font-light text-gray-500 dark:text-gray-300"
-          >
+          <label htmlFor="terms" className="font-light text-gray-500 ">
             I accept the{" "}
-            <a
-              className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-              href="#"
-            >
+            <a className="font-medium text-blue-600 hover:underline " href="#">
               Terms and Conditions
             </a>
           </label>
@@ -137,15 +135,24 @@ const RegisterForm = () => {
       </div>
       <button
         type="submit"
-        className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        disabled={isSubmitting}
+        className="w-full text-white flex justify-center items-center gap-3 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center  disabled:opacity-85"
       >
-        Create an account
+        Create an account{" "}
+        {isSubmitting && (
+          <l-tailspin
+            size="18"
+            stroke="3"
+            speed="0.9"
+            color="white"
+          ></l-tailspin>
+        )}
       </button>
-      <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+      <p className="text-sm font-light text-gray-500 ">
         Already have an account?{" "}
         <Link
           to={"/login"}
-          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+          className="font-medium text-blue-600 hover:underline "
         >
           Login here
         </Link>

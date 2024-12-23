@@ -41,7 +41,7 @@ const DashboardPage = () => {
       </div>
       <button
         onClick={handleLogout}
-        className=" border-2 border-blue-500 font-semibold text-blue-600 hover:bg-blue-500 hover:text-stone-50 duration-200  text-sm rounded self-end px-7 py-2"
+        className=" border-2 border-neutral-700 text-neutral-700 font-semibold  text-sm rounded self-end px-7 py-2"
       >
         Logout
       </button>

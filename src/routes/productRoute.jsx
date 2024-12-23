@@ -1,19 +1,23 @@
-import { Suspense } from "react";
-import LoadingPage from "../pages/LoadingPage";
+import NotFoundPage from "../pages/NotFoundPage";
 import ProductPage from "../features/product/pages/ProductPage";
-
-export const LazyLoad = ({ children }) => (
-  <Suspense fallback={<LoadingPage />}>{children}</Suspense>
-);
+import CreateProductPage from "../features/product/pages/CreateProductPage";
+import EditProductPage from "../features/product/pages/EditProductPage";
 
 const productRoute = [
   {
     path: "product",
-    element: (
-      <LazyLoad>
-        <ProductPage />
-      </LazyLoad>
-    ),
+    element: <ProductPage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "product/create",
+    element: <CreateProductPage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "product/edit/:id",
+    element: <EditProductPage />,
+    errorElement: <NotFoundPage />,
   },
 ];
 

@@ -1,53 +1,29 @@
-import { lazy, Suspense } from "react";
-import LoadingPage from "../pages/LoadingPage";
-
-const UserProfilePage = lazy(() =>
-  import("../features/user-profile/pages/UserProfilePage")
-);
-const ChangePasswordPage = lazy(() =>
-  import("../features/user-profile/pages/ChangePasswordPage")
-);
-const ChangeNamePage = lazy(() =>
-  import("../features/user-profile/pages/ChangeNamePage")
-);
-const ChangeProfileImagePage = lazy(() =>
-  import("../features/user-profile/pages/ChangeProfileImagePage")
-);
+import NotFoundPage from "../pages/NotFoundPage";
+import ChangeProfileImagePage from "../features/user-profile/pages/ChangeProfileImagePage";
+import ChangeNamePage from "../features/user-profile/pages/ChangeNamePage";
+import ChangePasswordPage from "../features/user-profile/pages/ChangePasswordPage";
+import UserProfilePage from "../features/user-profile/pages/UserProfilePage";
 
 const userProfileRoute = [
   {
     path: "user-profile",
-    element: (
-      <Suspense fallback={<LoadingPage />}>
-        <UserProfilePage />
-      </Suspense>
-    ),
-    children: [
-      {
-        path: "change-profile-image",
-        element: (
-          <Suspense fallback={<LoadingPage />}>
-            <ChangeProfileImagePage />
-          </Suspense>
-        ),
-      },
-      {
-        path: "change-name",
-        element: (
-          <Suspense fallback={<LoadingPage />}>
-            <ChangeNamePage />
-          </Suspense>
-        ),
-      },
-      {
-        path: "change-password",
-        element: (
-          <Suspense fallback={<LoadingPage />}>
-            <ChangePasswordPage />
-          </Suspense>
-        ),
-      },
-    ],
+    errorElement: <NotFoundPage />,
+    element: <UserProfilePage />,
+  },
+  {
+    path: "user-profile/change-profile-image",
+    errorElement: <NotFoundPage />,
+    element: <ChangeProfileImagePage />,
+  },
+  {
+    path: "user-profile/change-name",
+    errorElement: <NotFoundPage />,
+    element: <ChangeNamePage />,
+  },
+  {
+    path: "user-profile/change-password",
+    errorElement: <NotFoundPage />,
+    element: <ChangePasswordPage />,
   },
 ];
 

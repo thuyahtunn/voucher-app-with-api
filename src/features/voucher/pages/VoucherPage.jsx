@@ -1,15 +1,15 @@
 import React from "react";
 import ContainerSection from "../../../components/ContainerSection";
 import Breadcrumb from "../../../components/Breadcrumb";
-import ProductTable from "../components/ProductTable";
+import VoucherTable from "../components/VoucherTable";
 
-const ProductPage = () => {
+const VoucherPage = () => {
   return (
     <ContainerSection>
-      <Breadcrumb currentPageTitle={"Product"} />
-      <ProductTable />
+      <Breadcrumb currentPageTitle={"Voucher"} />
+      <VoucherTable />
     </ContainerSection>
   );
 };
 
-export default ProductPage;
+export default VoucherPage;
