@@ -2,14 +2,45 @@ import React from "react";
 import ContainerSection from "../../../components/ContainerSection";
 import Breadcrumb from "../../../components/Breadcrumb";
 import { useForm } from "react-hook-form";
+import { tailspin } from "ldrs";
+import toast from "react-hot-toast";
+import reactUseCookie, { removeCookie } from "react-use-cookie";
+import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../../utils/constants";
 
 const ChangePasswordPage = () => {
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
+  const [tokenCookie] = reactUseCookie("token");
+  const nav = useNavigate();
+  const handleChangePasswordBtn = async (data) => {
+    const res = await fetch(`${baseUrl}/user-profile/change-password`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${tokenCookie}`,
+      },
+    });
+    const json = await res.json();
+    if (res.ok) {
+      removeCookie("token");
+      removeCookie("user");
+      toast.success(json.message);
+      nav("/login");
+    } else {
+      toast.error(json.message);
+      console.log(json.message);
+    }
+    reset();
+  };
+  tailspin.register();
+
   return (
     <ContainerSection>
       <Breadcrumb
@@ -19,7 +50,10 @@ const ChangePasswordPage = () => {
         ]}
       />
       <div className=" border p-8 shadow-sm flex justify-center items-start">
-        <form className=" w-3/5 flex flex-col  space-y-3.5">
+        <form
+          onSubmit={handleSubmit(handleChangePasswordBtn)}
+          className=" w-3/5 flex flex-col  space-y-3.5"
+        >
           <div className="flex-grow flex flex-col gap-2 ">
             <label htmlFor="old_password" className="text-sm font-medium ">
               Old Password
@@ -88,9 +122,18 @@ const ChangePasswordPage = () => {
 
           <button
             type="submit"
-            className=" border-2 border-blue-500  self-center text-stone-50 bg-blue-500 w-full rounded py-2 text-sm font-semibold"
+            disabled={isSubmitting}
+            className=" border-2 border-blue-500  flex justify-center items-center gap-3 self-center text-stone-50 bg-blue-500 w-full rounded py-2 text-sm font-semibold disabled:opacity-80"
           >
-            Change Password
+            Change Password{" "}
+            {isSubmitting && (
+              <l-tailspin
+                size="18"
+                stroke="3"
+                speed="0.9"
+                color="white"
+              ></l-tailspin>
+            )}
           </button>
         </form>
       </div>

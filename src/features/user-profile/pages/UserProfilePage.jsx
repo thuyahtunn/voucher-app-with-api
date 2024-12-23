@@ -3,12 +3,13 @@ import Breadcrumb from "../../../components/Breadcrumb";
 import ContainerSection from "../../../components/ContainerSection";
 import userPlaceholder from "../../../assets/user-placeholder.png";
 import { HiPencilSquare } from "react-icons/hi2";
-import useUserStore from "../../../stores/useUserStore";
 import { Link } from "react-router-dom";
+import useUserDataStore from "../../../stores/useUserDataStore";
 
 const UserProfilePage = () => {
-  const { userStore } = useUserStore();
-  const { email, name, profile_image } = userStore;
+  const {
+    userStore: { name, email, profile_image },
+  } = useUserDataStore();
 
   return (
     <ContainerSection>

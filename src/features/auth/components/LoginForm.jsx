@@ -9,19 +9,17 @@ import { tailspin } from "ldrs";
 // Default values shown
 
 const LoginForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
   const nav = useNavigate();
   const [tokenCookie, setTokenCookie] = reactUseCookie("token");
   const [userCookie, setUserCookie] = reactUseCookie("user");
 
   const handleLogin = async (data) => {
-    setIsLoading(true);
     const res = await login(data);
     const json = await res.json();
     if (res.status === 200) {
@@ -32,7 +30,6 @@ const LoginForm = () => {
       toast.error("error at login");
       console.log("error at login");
     }
-    setIsLoading(false);
     reset();
   };
   tailspin.register();
@@ -46,7 +43,7 @@ const LoginForm = () => {
       <div>
         <label
           htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 "
         >
           Your email
         </label>
@@ -60,7 +57,7 @@ const LoginForm = () => {
               message: "Invalid email address",
             },
           })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
           placeholder="name@company.com"
         />
         {errors.email && errors.email.type === "required" && (
@@ -74,7 +71,7 @@ const LoginForm = () => {
       <div>
         <label
           htmlFor="password"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block mb-2 text-sm font-medium text-gray-900 "
         >
           Password
         </label>
@@ -82,7 +79,7 @@ const LoginForm = () => {
           type="password"
           id="password"
           {...register("password", { required: true })}
-          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 "
         />
         {errors.password && errors.password.type === "required" && (
           <p className="mt-1 text-xs text-red-500">Password is Required</p>
@@ -95,33 +92,30 @@ const LoginForm = () => {
               id="remember"
               aria-describedby="remember"
               type="checkbox"
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
               required
             />
           </div>
           <div className="ml-3 text-sm">
-            <label
-              htmlFor="remember"
-              className="text-gray-500 dark:text-gray-300"
-            >
+            <label htmlFor="remember" className="text-gray-500 ">
               Remember me
             </label>
           </div>
         </div>
         <a
           href="#"
-          className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+          className="text-sm font-medium text-blue-600 hover:underline "
         >
           Forgot password?
         </a>
       </div>
       <button
         type="submit"
-        disabled={isLoading}
-        className={`w-full text-white flex justify-center items-center gap-3 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-85`}
+        disabled={isSubmitting}
+        className={`w-full text-white flex justify-center items-center gap-3 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center  disabled:opacity-85`}
       >
         Sign in{" "}
-        {isLoading && (
+        {isSubmitting && (
           <l-tailspin
             size="18"
             stroke="3"
@@ -130,11 +124,11 @@ const LoginForm = () => {
           ></l-tailspin>
         )}
       </button>
-      <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+      <p className="text-sm font-light text-gray-500 ">
         Don’t have an account yet?{" "}
         <Link
           to={"/register"}
-          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+          className="font-medium text-blue-600 hover:underline "
         >
           Sign up
         </Link>

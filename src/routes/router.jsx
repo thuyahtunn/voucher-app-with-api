@@ -8,15 +8,12 @@ import NotFoundPage from "../pages/NotFoundPage";
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <NotFoundPage />,
     element: <PublicLayout />,
     children: [...publicRoute],
   },
   ...AuthRoute,
   ...DashboardRoute,
-  {
-    path: "*",
-    element: <NotFoundPage />,
-  },
 ]);
 
 export default router;

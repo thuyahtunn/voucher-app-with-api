@@ -1,28 +1,25 @@
-import { lazy, Suspense } from "react";
-import LoadingPage from "../pages/LoadingPage";
-
 import DashboardLayout from "../features/dashboard/components/DashboardLayout";
 import userProfileRoute from "./userProfileRoute";
 import productRoute from "./productRoute";
-const DashboardPage = lazy(() =>
-  import("../features/dashboard/pages/DashboardPage")
-);
+import DashboardPage from "../features/dashboard/pages/DashboardPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import saleRoute from "./saleRoute";
+import voucherRoute from "./voucherRoute";
 
 const DashboardRoute = [
   {
     path: "/dashboard",
     element: <DashboardLayout />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<LoadingPage />}>
-            <DashboardPage />
-          </Suspense>
-        ),
+        element: <DashboardPage />,
       },
       ...userProfileRoute,
       ...productRoute,
+      ...saleRoute,
+      ...voucherRoute,
     ],
   },
 ];

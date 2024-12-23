@@ -1,11 +1,12 @@
 import React from "react";
 import ContainerSection from "../../../components/ContainerSection";
 import userPlaceholder from "../../../assets/user-placeholder.png";
-import useUserStore from "../../../stores/useUserStore";
+import useUserDataStore from "../../../stores/useUserDataStore";
 
 const Header = () => {
-  const { userStore } = useUserStore();
-  const { email, profile_image, name } = userStore;
+  const {
+    userStore: { name, email, profile_image },
+  } = useUserDataStore();
   return (
     <header className=" pt-5 pb-3.5 print:hidden">
       <ContainerSection>

@@ -1,10 +1,6 @@
-import { lazy } from "react";
-
-const AboutUsPage = lazy(() => import("../features/public/pages/AboutUsPage"));
-const ContactUsPage = lazy(() =>
-  import("../features/public/pages/ContactUsPage")
-);
-const HomePage = lazy(() => import("../features/public/pages/HomePage"));
+import HomePage from "../features/public/pages/HomePage";
+import AboutUsPage from "../features/public/pages/AboutUsPage";
+import ContactUsPage from "../features/public/pages/ContactUsPage";
 
 const publicRoute = [
   {
